@@ -1,0 +1,20 @@
+build:cuda --crosstool_top=@local_config_cuda//crosstool:toolchain
+build:cuda --define=using_cuda=true --define=using_cuda_nvcc=true
+
+build --force_python=py2
+build --python2_path=/usr/bin/python
+
+build --action_env PYTHON_BIN_PATH="/usr/bin/python"
+
+build --define PYTHON_BIN_PATH=/usr/bin/python
+test --define PYTHON_BIN_PATH=/usr/bin/python
+run --define PYTHON_BIN_PATH=/usr/bin/python
+
+build --spawn_strategy=standalone --genrule_strategy=standalone
+test --spawn_strategy=standalone --genrule_strategy=standalone
+run --spawn_strategy=standalone --genrule_strategy=standalone
+
+build --define=grpc_no_ares=true
+
+# TODO(b/69809703): Remove once no longer required for TensorFlow to build.
+build --copt=-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK
